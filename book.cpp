@@ -14,6 +14,7 @@ std::set<std::string> Book::keywords() const{
     set<string> result;
     result.insert(getName());
     result.insert(author_);
+    result.insert(isbn_);
     return result;
 }
 
