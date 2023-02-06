@@ -18,8 +18,15 @@ std::set<std::string> Movie::keywords() const{
 }
 
 std::string Movie::displayString() const{
+    /* 
+    <name>
+    Genre: <genre> Rating: <rating>
+    <price> <quantity> left.
+     */
     string res;
-    res = res + "Category: " + category_ + " Name: " +  name_ + " Price: " +  price_ + " Quantity: " +  qty_ + " Genre: " + genre_ + " rating: " +  rating_;
+    res = name_ + '\n' +
+    "Genre: " + genre_ + " Rating: " + rating_ + '\n' +
+    price_ + " " + quantity_ + " left.";
     return res;
 }
 

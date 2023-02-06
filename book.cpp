@@ -19,8 +19,14 @@ std::set<std::string> Book::keywords() const{
 }
 
 std::string Book::displayString() const{
+    /* 
+    <name>
+    Author: <author> ISBN: <isbn>
+    <price> <quantity> left. 
+    */
+
     string res;
-    res = res + "Category: " + category_ + " Name: " +  name_ + " Price: " +  price_ + " Quantity: " +  qty_ + " ISBN: " + isbn_ + " Author: " +  author_;
+    res = name_ + '\n' + "Author: " + author_ + " ISBN: " + isbn_ + '\n' + price_ + " " + qty_ + " left.";
     return res;
 }
 

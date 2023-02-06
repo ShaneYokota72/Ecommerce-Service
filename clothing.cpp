@@ -18,8 +18,15 @@ std::set<std::string> Clothing::keywords() const{
 }
 
 std::string Clothing::displayString() const{
+    /* 
+    <name>
+    Size: <size> Brand: <brand>
+    <price> <quantity> left.
+    */
     string res;
-    res = res + "Category: " + category_ + " Name: " +  name_ + " Price: " +  price_ + " Quantity: " +  qty_ + " Size: " + size_ + " Brand: " +  brand_;
+    res = res = name_ + '\n' +
+    "Size: " + size_ + " Brand: " + brand_ + '\n' +
+    price_ + " " + quantity_ + " left.";
     return res;
 }
 
