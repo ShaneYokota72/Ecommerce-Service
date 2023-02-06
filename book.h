@@ -14,4 +14,4 @@ public:
 private:
     std::string isbn_;
     std::string author_;
-}
+};

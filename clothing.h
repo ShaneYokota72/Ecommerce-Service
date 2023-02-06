@@ -14,4 +14,4 @@ public:
 private:
     std::string size_;
     std::string brand_;
-}
+};

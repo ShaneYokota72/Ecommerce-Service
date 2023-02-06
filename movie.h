@@ -14,4 +14,4 @@ public:
 private:
     std::string genre_;
     std::string rating_;
-}
+};
