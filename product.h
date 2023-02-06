@@ -29,7 +29,7 @@ public:
     /**
      * Outputs the product info in the database format
      */
-    virtual void dump(std::ostream& os) const;
+    virtual void dump( ) const;
 
     /**
      * Accessors and mutators

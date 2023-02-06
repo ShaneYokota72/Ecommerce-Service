@@ -13,22 +13,30 @@ std::string convToLower(std::string src)
 
 /** Complete the code to convert a string containing a rawWord
     to a set of words based on the criteria given in the assignment **/
-std::set<std::string> parseStringToWords(string rawWords)
+std::set<std::string> parseStringToWords(std::string rawWords)
 {
     std::set <std::string> result;
-    std::int wordlen = 0;
-    std::int curridx = 0;
-    std::int wordbegin = 0;
+    int wordlen = 0;
+    int curridx = 0;
+    int wordbegin = 0;
 
-    for(std::int i=0; i<rawWords.length(); i++){
-        if(rawWords[i] == "." || rawWords[i] == "\'" || rawWords[i] == "," || rawWords[i] == ":" || rawWords[i] == " "){
+    for(int i=0; i<rawWords.length(); i++){
+        if(rawWords[i] == '.' || rawWords[i] == '\'' || rawWords[i] == ',' || rawWords[i] == ':' || rawWords[i] == ' ' || rawWords[i]=='\0'){
             if(wordlen>1){
                 std::string temp = rawWords.substr(wordbegin, wordlen);
                 result.insert(temp);
                 wordlen = 0;
                 wordbegin = i+1;
+            }else {
+                wordlen = 0;
+                wordbegin = i+1;
             }
-        } else {
+        } else if(i == rawWords.length()-1 && wordlen>1){
+            std::string temp = rawWords.substr(wordbegin, wordlen+1);
+            result.insert(temp);
+            wordlen = 0;
+            wordbegin = i+1;
+        }else {
             curridx++;
             wordlen++;
         }
