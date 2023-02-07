@@ -38,7 +38,7 @@ public:
     std::string getName() const;
     int getQty() const;
     void subtractQty(int num);
-    virtual void sold();
+    virtual void sold() = 0;
 protected:
     std::string name_;
     double price_;
