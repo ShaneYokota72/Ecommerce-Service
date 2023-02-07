@@ -26,19 +26,12 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
                 set<string>::iterator it = productword.find(terms.at(i));
                 if(it == productword.end()){
                     match = false;
-                }/* 
-                set<string> match = setIntersection<string>(parseStringToWords((*productvector.at(i)).getName()), parseStringToWords(terms.at(i)));
-                if(match.size()>0){
-                    resultset.insert(productvector.at(i));
-                } */
+                }
             }
             if(match){
                 resultset.insert(productvector.at(i));
             }
         }
-        /* resultset = setIntersection<Product*>(productvector, terms);
-        vector<Product*> result(resultset.size());
-        std::copy(resultset.begin(), resultset.end(), result.begin()); */
     } else {
         // union
         for(unsigned int i=0; i<productvector.size(); i++){
@@ -48,11 +41,7 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
                 set<string>::iterator it = productword.find(terms.at(i));
                 if(it != productword.end()){
                     match = true;
-                }/* 
-                set<string> match = setIntersection<string>(parseStringToWords((*productvector.at(i)).getName()), parseStringToWords(terms.at(i)));
-                if(match.size()>0){
-                    resultset.insert(productvector.at(i));
-                } */
+                }
             }
             if(match){
                 resultset.insert(productvector.at(i));
