@@ -1,3 +1,5 @@
+#ifndef CLOTHING_H
+#define CLOTHING_H
 #include "product.h"
 
 class Clothing : public Product{
@@ -11,7 +13,9 @@ public:
     std::string displayString() const;
     //virtual. outputs the database format of the product info
     void dump(std::ostream& os) const;
+    void sold();
 private:
     std::string size_;
     std::string brand_;
 };
+#endif

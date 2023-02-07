@@ -1,4 +1,4 @@
-#include "datastor.h"
+#include "datastore.h"
 #include "util.h"
 
 
@@ -11,7 +11,7 @@ public:
     ~MyDataStore();
 
     /**
-     * Adds a product to the data store
+     *  Adds a product to the data store
      */
     void addProduct(Product* p);
 
@@ -31,11 +31,12 @@ public:
      * Reproduce the database file from the current Products and User values
      */
     void dump(std::ostream& ofile);
-
-private:
-
+   
+    
+/* private:
+ */
 //product
     std::vector<Product*> productvector;
 //users
     std::vector<User*> uservector;
-}
+};

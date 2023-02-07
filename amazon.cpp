@@ -12,6 +12,9 @@
 #include "mydatastore.h"
 #include <queue>
 #include <map>
+#include <deque>
+#include "user.h"
+#include "product.h"
 
 using namespace std;
 struct ProdNameSorter {
@@ -66,7 +69,7 @@ int main(int argc, char* argv[])
     cout << "====================================" << endl;
 
     vector<Product*> hits;
-    map<User, queue<Product*>> usercarts;
+    map<string, deque<Product*>> usercarts;
     bool done = false;
     while(!done) {
         cout << "\nEnter command: " << endl;
@@ -114,18 +117,25 @@ int main(int argc, char* argv[])
                 }
 
                 //find user
-                vector<User*>::iterator it = uservector.find(username);
-                if(it!=uservector.end()){
+                /* vector<User*>::iterator it = (ds.uservector).find(username); */
+                bool userexist = false;
+                for(int i=0; i<(ds.uservector).size(); i++){
+                    if(((ds.uservector).at(i))->getName() == username){
+                        userexist = true;
+                        break;
+                    }
+                }
+                if(userexist){
                     //there's a user
-                    map<User, queue<Product*>>::iterator it2 = usercarts.find(username);
+                    map<string, deque<Product*>>::iterator it2 = usercarts.find(username);
                     if(it2 != usercarts.end()){
                         //this user already has a cart
-                        (it2->second).push_back(hits.at(search_hit_number));
+                        (it2->second).push_back(hits.at(stoi(search_hit_number)));
                     } else {
                         //this user does not have a cart
-                        queue<Product*> user_cart;
+                        deque<Product*> user_cart;
                         usercarts.insert(make_pair(username, user_cart));
-                        (it2->second).push_back(hits.at(search_hit_number));
+                        (it2->second).push_back(hits.at(stoi(search_hit_number)));
                     }
                 } else {
                     cout << "Invalid request" << endl;
@@ -136,15 +146,22 @@ int main(int argc, char* argv[])
                 string username = "";
                 ss >> username;
                 if(ss.fail()){cout << "Invalid request" << endl;}
-                vector<User*>::iterator it = uservector.find(username);
-                if(it!=uservector.end()){
+
+                bool userexist = false;
+                for(int i=0; i<(ds.uservector).size(); i++){
+                    if(((ds.uservector).at(i))->getName() == username){
+                        userexist = true;
+                        break;
+                    }
+                }
+                if(userexist){
                     //view cart
-                    map<User, queue<Product*>>::iterator it2 = usercarts.find(username);
+                    map<string, deque<Product*>>::iterator it2 = usercarts.find(username);
                     if(it2 != usercarts.end()){
                         //this user already has a cart
                         // (it2->second) is the queue
-                        for(int i=0; i<(it2->second).length(); i++){
-                            cout << (*(it2->second).at(i)).getName() << endl;
+                        for(int i=0; i<(it2->second).size(); i++){
+                            cout << ((it2->second).at(i))->getName() << endl;
                         }
                     } else {
                         cout << "empty cart" << endl;
@@ -157,18 +174,27 @@ int main(int argc, char* argv[])
                 string username = "";
                 ss >> username;
                 if(ss.fail()){cout << "Invalid request" << endl;}
-                vector<User*>::iterator it = uservector.find(username);
-                if(it!=uservector.end()){
+                
+                bool userexist = false;
+                User* userptr;
+                for(int i=0; i<(ds.uservector).size(); i++){
+                    if(((ds.uservector).at(i))->getName() == username){
+                        userexist = true;
+                        userptr = (ds.uservector).at(i);
+                        break;
+                    }
+                }
+                if(userexist){
                     //Buy cart
-                    map<User, queue<Product*>>::iterator it2 = usercarts.find(username);
+                    map<string, deque<Product*>>::iterator it2 = usercarts.find(username);
                     if(it2 != usercarts.end()){
                         //cart exists
-                        for(int i=(it2->second).length(); i!=0; i--){
-                            if(((*it).getBalance >= (it2->second).at(0)) && ((it2->second).at(0).qty_)>0){
-                                (*it).deductAmount((it2->second).at(0).price_);
-                                ((it2->second).at(0).qty_)--;
+                        for(int i=(it2->second).size(); i!=0; i--){
+                            if(((*userptr).getBalance() >= (it2->second).at(0)->getPrice()) && ((it2->second).at(0)->getQty())>0){
+                                (*userptr).deductAmount((it2->second).at(0)->getPrice());
+                                (it2->second).at(0)->sold();
                             }
-                            (it2->second).pop();
+                            (it2->second).pop_front();
                         }
                     }
                 } else {

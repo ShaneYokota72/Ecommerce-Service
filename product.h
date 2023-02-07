@@ -29,7 +29,7 @@ public:
     /**
      * Outputs the product info in the database format
      */
-    virtual void dump( ) const;
+    virtual void dump(std::ostream& os) const;
 
     /**
      * Accessors and mutators
@@ -38,7 +38,7 @@ public:
     std::string getName() const;
     int getQty() const;
     void subtractQty(int num);
-
+    virtual void sold();
 protected:
     std::string name_;
     double price_;

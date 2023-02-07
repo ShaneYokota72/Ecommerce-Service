@@ -1,3 +1,5 @@
+#ifndef BOOK_H
+#define BOOK_H
 #include "book.h"
 
 class Book : public Product{
@@ -11,7 +13,9 @@ public:
     std::string displayString() const;
     //virtual. outputs the database format of the product info
     void dump(std::ostream& os) const;
+    void sold();
 private:
     std::string isbn_;
     std::string author_;
 };
+#endif
