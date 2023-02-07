@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
                 //find user
                 /* vector<User*>::iterator it = (ds.uservector).find(username); */
                 bool userexist = false;
-                for(int i=0; i<(ds.uservector).size(); i++){
+                for(unsigned int i=0; i<(ds.uservector).size(); i++){
                     if(((ds.uservector).at(i))->getName() == username){
                         userexist = true;
                         break;
@@ -148,7 +148,7 @@ int main(int argc, char* argv[])
                 if(ss.fail()){cout << "Invalid request" << endl;}
 
                 bool userexist = false;
-                for(int i=0; i<(ds.uservector).size(); i++){
+                for(unsigned int i=0; i<(ds.uservector).size(); i++){
                     if(((ds.uservector).at(i))->getName() == username){
                         userexist = true;
                         break;
@@ -160,7 +160,7 @@ int main(int argc, char* argv[])
                     if(it2 != usercarts.end()){
                         //this user already has a cart
                         // (it2->second) is the queue
-                        for(int i=0; i<(it2->second).size(); i++){
+                        for(unsigned int i=0; i<(it2->second).size(); i++){
                             cout << ((it2->second).at(i))->getName() << endl;
                         }
                     } else {
@@ -177,7 +177,7 @@ int main(int argc, char* argv[])
                 
                 bool userexist = false;
                 User* userptr;
-                for(int i=0; i<(ds.uservector).size(); i++){
+                for(unsigned int i=0; i<(ds.uservector).size(); i++){
                     if(((ds.uservector).at(i))->getName() == username){
                         userexist = true;
                         userptr = (ds.uservector).at(i);

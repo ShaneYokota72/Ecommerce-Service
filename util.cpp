@@ -20,7 +20,7 @@ std::set<std::string> parseStringToWords(std::string rawWords)
     int curridx = 0;
     int wordbegin = 0;
 
-    for(int i=0; i<rawWords.length(); i++){
+    for(unsigned int i=0; i<rawWords.length(); i++){
         if(rawWords[i] == '.' || rawWords[i] == '\'' || rawWords[i] == ',' || rawWords[i] == ':' || rawWords[i] == ' ' || rawWords[i]=='\0'){
             if(wordlen>1){
                 std::string temp = rawWords.substr(wordbegin, wordlen);
