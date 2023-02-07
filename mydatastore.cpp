@@ -19,10 +19,10 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
     set<Product*> resultset;
     if(type == 0){
         //intersection
-        for(int i=0; i<productvector.size(); i++){
+        for(unsigned int i=0; i<productvector.size(); i++){
             set<string> productword = parseStringToWords((*productvector.at(i)).getName());
             bool match = true;            
-            for(int j=0; j<terms.size(); j++){
+            for(unsigned int j=0; j<terms.size(); j++){
                 set<string>::iterator it = productword.find(terms.at(i));
                 if(it == productword.end()){
                     match = false;
@@ -41,10 +41,10 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
         std::copy(resultset.begin(), resultset.end(), result.begin()); */
     } else {
         // union
-        for(int i=0; i<productvector.size(); i++){
+        for(unsigned int i=0; i<productvector.size(); i++){
             set<string> productword = parseStringToWords((*productvector.at(i)).getName());
             bool match = false;            
-            for(int j=0; j<terms.size(); j++){
+            for(unsigned int j=0; j<terms.size(); j++){
                 set<string>::iterator it = productword.find(terms.at(i));
                 if(it != productword.end()){
                     match = true;
@@ -63,10 +63,10 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
     return ans;
 }
 void MyDataStore::dump(std::ostream& ofile){
-    for(int i=0; i<productvector.size(); i++){
+    for(unsigned int i=0; i<productvector.size(); i++){
         (productvector.at(i))->dump(ofile);
     }
-    for(int i=0; i<uservector.size(); i++){
+    for(unsigned int i=0; i<uservector.size(); i++){
         (uservector.at(i))->dump(ofile);
     }
 }
