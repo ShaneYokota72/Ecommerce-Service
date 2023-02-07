@@ -3,12 +3,12 @@
 using namespace std;
 
 //CLOTHES:the words in the brand should be searchable keywords
-Clothing::Clothing(category, name, price, qty, size, brand) : Product(category, name, price, qty)
+Clothing::Clothing(const std::string category, const std::string name, double price, int qty, string size, string brand) : Product(category, name, price, qty)
 {
     size_ = size;
     brand_ = brand;
 }
-Clothing::~Clothing();
+Clothing::~Clothing(){ };
 
 std::set<std::string> Clothing::keywords() const{
     set<string> result;
@@ -26,7 +26,7 @@ std::string Clothing::displayString() const{
     string res;
     res = res = name_ + '\n' +
     "Size: " + size_ + " Brand: " + brand_ + '\n' +
-    price_ + " " + quantity_ + " left.";
+    to_string(price_) + " " + to_string(qty_) + " left.";
     return res;
 }
 

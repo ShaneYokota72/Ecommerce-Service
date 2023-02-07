@@ -3,12 +3,12 @@
 using namespace std;
 
 //MOVIE:the movie’s genre should be a searchable keyword
-Movie::Movie(category, name, price, qty, genre, rating) : Product(category, name, price, qty)
+Movie::Movie(const std::string category, const std::string name, double price, int qty, string genre, string rating) : Product(category, name, price, qty)
 {
     genre_ = genre;
     rating_ = rating;
 }
-Movie::~Movie();
+Movie::~Movie(){ };
 
 std::set<std::string> Movie::keywords() const{
     set<string> result;
@@ -26,7 +26,7 @@ std::string Movie::displayString() const{
     string res;
     res = name_ + '\n' +
     "Genre: " + genre_ + " Rating: " + rating_ + '\n' +
-    price_ + " " + quantity_ + " left.";
+    to_string(price_) + " " + to_string(qty_) + " left.";
     return res;
 }
 

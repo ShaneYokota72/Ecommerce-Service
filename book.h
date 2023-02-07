@@ -1,6 +1,6 @@
 #ifndef BOOK_H
 #define BOOK_H
-#include "book.h"
+#include "product.h"
 
 class Book : public Product{
 public:
