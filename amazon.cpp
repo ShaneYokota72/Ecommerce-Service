@@ -9,6 +9,9 @@
 #include "db_parser.h"
 #include "product_parser.h"
 #include "util.h"
+#include "mydatastore.h"
+#include <queue>
+#include <map>
 
 using namespace std;
 struct ProdNameSorter {
@@ -29,7 +32,8 @@ int main(int argc, char* argv[])
      * Declare your derived DataStore object here replacing
      *  DataStore type to your derived type
      ****************/
-    DataStore ds;
+    // DataStore ds;
+    MyDataStore ds;
 
 
 
@@ -62,6 +66,7 @@ int main(int argc, char* argv[])
     cout << "====================================" << endl;
 
     vector<Product*> hits;
+    map<User, queue<Product*>> usercarts;
     bool done = false;
     while(!done) {
         cout << "\nEnter command: " << endl;
@@ -98,13 +103,78 @@ int main(int argc, char* argv[])
                     ofile.close();
                 }
                 done = true;
-            }
-	    /* Add support for other commands here */
+            } else if (cmd == "ADD"){/* Add support for other commands here */
+                //username search_hit_number
+                string username = "";
+                string search_hit_number = "";
 
+                ss >> username >> search_hit_number;
+                if(ss.fail()){
+                    cout << "Invalid request" << endl;
+                }
 
+                //find user
+                vector<User*>::iterator it = uservector.find(username);
+                if(it!=uservector.end()){
+                    //there's a user
+                    map<User, queue<Product*>>::iterator it2 = usercarts.find(username);
+                    if(it2 != usercarts.end()){
+                        //this user already has a cart
+                        (it2->second).push_back(hits.at(search_hit_number));
+                    } else {
+                        //this user does not have a cart
+                        queue<Product*> user_cart;
+                        usercarts.insert(make_pair(username, user_cart));
+                        (it2->second).push_back(hits.at(search_hit_number));
+                    }
+                } else {
+                    cout << "Invalid request" << endl;
+                }
 
-
-            else {
+            } else if (cmd == "VIEWCART"){
+                //username 
+                string username = "";
+                ss >> username;
+                if(ss.fail()){cout << "Invalid request" << endl;}
+                vector<User*>::iterator it = uservector.find(username);
+                if(it!=uservector.end()){
+                    //view cart
+                    map<User, queue<Product*>>::iterator it2 = usercarts.find(username);
+                    if(it2 != usercarts.end()){
+                        //this user already has a cart
+                        // (it2->second) is the queue
+                        for(int i=0; i<(it2->second).length(); i++){
+                            cout << (*(it2->second).at(i)).getName() << endl;
+                        }
+                    } else {
+                        cout << "empty cart" << endl;
+                    }
+                } else {
+                    cout << "Invalid request" << endl;
+                }
+            } else if (cmd == "BUYCART"){
+                //username 
+                string username = "";
+                ss >> username;
+                if(ss.fail()){cout << "Invalid request" << endl;}
+                vector<User*>::iterator it = uservector.find(username);
+                if(it!=uservector.end()){
+                    //Buy cart
+                    map<User, queue<Product*>>::iterator it2 = usercarts.find(username);
+                    if(it2 != usercarts.end()){
+                        //cart exists
+                        for(int i=(it2->second).length(); i!=0; i--){
+                            if(((*it).getBalance >= (it2->second).at(0)) && ((it2->second).at(0).qty_)>0){
+                                (*it).deductAmount((it2->second).at(0).price_);
+                                ((it2->second).at(0).qty_)--;
+                            }
+                            (it2->second).pop();
+                        }
+                    }
+                } else {
+                    cout << "Invalid request" << endl;
+                }
+            } else {
                 cout << "Unknown command" << endl;
             }
         }
