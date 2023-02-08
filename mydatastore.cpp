@@ -6,7 +6,14 @@ using namespace std;
 
 MyDataStore::MyDataStore(){ }
 
-MyDataStore::~MyDataStore() { }
+MyDataStore::~MyDataStore() {
+    for(unsigned int i=0; i<productvector.size(); i++){
+        delete [] productvector.at(i);
+    }
+    for(unsigned int i=0; i<uservector.size(); i++){
+        delete [] uservector.at(i);
+    }
+}
 
 void MyDataStore::addProduct(Product* p){
     productvector.push_back(p);
