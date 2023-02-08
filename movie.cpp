@@ -1,5 +1,5 @@
 #include "movie.h"
-
+#include <iomanip>
 using namespace std;
 
 //MOVIE:the movie’s genre should be a searchable keyword
@@ -31,7 +31,7 @@ std::string Movie::displayString() const{
 }
 
 void Movie::dump(std::ostream& os) const{
-    os << category_ << "\n" << name_ << "\n" << price_ << "\n" << qty_ << 
+    os << category_ << "\n" << name_ << "\n" << fixed << setprecision(2) << price_ << "\n" << qty_ << 
     "\n" << genre_ << "\n" << rating_ << endl;
 }
 
