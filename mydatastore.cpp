@@ -19,10 +19,12 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
     //get a set for 2nd term
     set<Product*> set1;
     set<Product*> set2;
-    cout << "productvec size" << productvector.size() << endl;
-    cout << "termtvec size" << terms.size() << endl;
+    // cout << "productvec size" << productvector.size() << endl;
+    // cout << "termtvec size" << terms.size() << endl;
     for(unsigned int i=0; i<productvector.size(); i++){
         set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
+        set<string> productwordsaddition = (*productvector.at(i)).keywords();
+        productwords.insert(productwordsaddition.begin(), productwordsaddition.end());
 
         /* for(auto str:productwords){
             cout << "Product separated:" << str << endl;
@@ -32,16 +34,16 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
             cout << "Terms separated: " << wor << endl;
         }
         cout << endl << endl; */
-        
+
         set<string>::iterator it = productwords.find(terms.at(0));
         if(it != productwords.end()){
             set1.insert(productvector.at(i));
-            cout << "set1 inserted at " << i << endl;
+            // cout << "set1 inserted at " << i << endl;
         }
         set<string>::iterator it2 = productwords.find(terms.at(1));
         if(it2 != productwords.end()){
             set2.insert(productvector.at(i));
-            cout << "set2 inserted at " << i << endl;
+            // cout << "set2 inserted at " << i << endl;
         }
     }
     set<Product*> result;
