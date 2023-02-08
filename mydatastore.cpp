@@ -95,10 +95,13 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
     return ans;
 }
 void MyDataStore::dump(std::ostream& ofile){
+    ofile << "<products>\n";
     for(unsigned int i=0; i<productvector.size(); i++){
         (productvector.at(i))->dump(ofile);
     }
+    ofile << "</products>\n<users>\n";
     for(unsigned int i=0; i<uservector.size(); i++){
         (uservector.at(i))->dump(ofile);
     }
+    ofile << "</users>";
 }
