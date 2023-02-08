@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
     cout << "====================================" << endl;
 
     vector<Product*> hits;
-    map<string, deque<Product*>> usercarts;
+    map<string, deque<Product*>*> usercarts;
     bool done = false;
     while(!done) {
         cout << "\nEnter command: " << endl;
@@ -130,15 +130,19 @@ int main(int argc, char* argv[])
                 }
                 if(userexist){
                     //there's a user
-                    map<string, deque<Product*>>::iterator it2 = usercarts.find(username);
+                    map<string, deque<Product*>*>::iterator it2 = usercarts.find(username);
                     if(it2 != usercarts.end()){
                         //this user already has a cart
-                        (it2->second).push_back(hits.at(stoi(search_hit_number)-1));
+                        (it2->second)->push_back(hits.at(stoi(search_hit_number)-1));
                     } else {
                         //this user does not have a cart
-                        deque<Product*> user_cart;
+                        deque<Product*>* user_cart = new deque<Product*>();
+                        
+                        user_cart->push_back(hits.at(stoi(search_hit_number)-1));
                         usercarts.insert(make_pair(username, user_cart));
-                        (it2->second).push_back(hits.at(stoi(search_hit_number)-1));
+                        //(it2->second) = user_cart;
+                        /*cout << "element: " << hits.at(stoi(search_hit_number)-1)->getName() << endl;
+                        (it2->second)->push_back(hits.at(stoi(search_hit_number)-1));*/
                     }
                 } else {
                     cout << "Invalid request" << endl;
@@ -159,12 +163,12 @@ int main(int argc, char* argv[])
                 }
                 if(userexist){
                     //view cart
-                    map<string, deque<Product*>>::iterator it2 = usercarts.find(username);
+                    map<string, deque<Product*>*>::iterator it2 = usercarts.find(username);
                     if(it2 != usercarts.end()){
                         //this user already has a cart
                         // (it2->second) is the queue
-                        for(unsigned int i=0; i<(it2->second).size(); i++){
-                            cout << ((it2->second).at(i))->getName() << endl;
+                        for(unsigned int i=0; i<(it2->second)->size(); i++){
+                            cout << ((it2->second)->at(i))->getName() << endl;
                         }
                     } else {
                         cout << "empty cart" << endl;
@@ -189,15 +193,15 @@ int main(int argc, char* argv[])
                 }
                 if(userexist){
                     //Buy cart
-                    map<string, deque<Product*>>::iterator it2 = usercarts.find(username);
+                    map<string, deque<Product*>*>::iterator it2 = usercarts.find(username);
                     if(it2 != usercarts.end()){
                         //cart exists
-                        for(int i=(it2->second).size(); i!=0; i--){
-                            if(((*userptr).getBalance() >= (it2->second).at(0)->getPrice()) && ((it2->second).at(0)->getQty())>0){
-                                (*userptr).deductAmount((it2->second).at(0)->getPrice());
-                                (it2->second).at(0)->sold();
+                        for(int i=(it2->second)->size(); i!=0; i--){
+                            if(((*userptr).getBalance() >= (it2->second)->at(0)->getPrice()) && ((it2->second)->at(0)->getQty())>0){
+                                (*userptr).deductAmount((it2->second)->at(0)->getPrice());
+                                (it2->second)->at(0)->sold();
                             }
-                            (it2->second).pop_front();
+                            (it2->second)->pop_front();
                         }
                     }
                 } else {
