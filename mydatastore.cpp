@@ -15,7 +15,33 @@ void MyDataStore::addUser(User* u){
     uservector.push_back(u);
 }
 std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int type){
-    /* vector<Product*> result; */
+    // get a set for the 1st term
+    //get a set for 2nd term
+    set<Product*> set1;
+    set<Product*> set2;
+    
+    for(unsigned int i=0; i<productvector.size(); i++){
+        set<string> productwords = parseStringToWords((*productvector.at(i)).getName());
+        set<string>::iterator it = productwords.find(terms.at(0));
+        if(it != productwords.end()){
+            set1.insert(productvector.at(i));
+        }
+        set<string>::iterator it2 = productwords.find(terms.at(1));
+        if(it2 != productwords.end()){
+            set2.insert(productvector.at(i));
+        }
+    }
+    set<Product*> result;
+    if(type == 0){
+        //intersection
+        result = setIntersection(set1, set2);
+    } else {
+        //union
+        result = setUnion(set1, set2);
+    }
+
+
+    /* //compare the 1st and 2nd sets and come out with the result vector
     set<Product*> resultset;
     if(type == 0){
         //intersection
@@ -47,8 +73,10 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
                 resultset.insert(productvector.at(i));
             }
         }
-    }
-    vector<Product*> ans(resultset.begin(), resultset.end());
+    } */
+
+    vector<Product*> ans;
+    ans.assign(result.begin(), result.end());
     return ans;
 }
 void MyDataStore::dump(std::ostream& ofile){

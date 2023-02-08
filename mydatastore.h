@@ -34,8 +34,7 @@ public:
     void dump(std::ostream& ofile);
    
     
-/* private:
- */
+/* private:*/
 //product
     std::vector<Product*> productvector;
 //users
