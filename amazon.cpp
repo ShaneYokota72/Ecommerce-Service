@@ -116,7 +116,9 @@ int main(int argc, char* argv[])
                 if(ss.fail()){
                     cout << "Invalid request" << endl;
                 }
-
+                if(stoi(search_hit_number)-1 >= hits.size() || stoi(search_hit_number)-1 < 0){
+                    cout << "Invalid request" << endl;
+                }
                 //find user
                 /* vector<User*>::iterator it = (ds.uservector).find(username); */
                 bool userexist = false;
@@ -131,12 +133,12 @@ int main(int argc, char* argv[])
                     map<string, deque<Product*>>::iterator it2 = usercarts.find(username);
                     if(it2 != usercarts.end()){
                         //this user already has a cart
-                        (it2->second).push_back(hits.at(stoi(search_hit_number)));
+                        (it2->second).push_back(hits.at(stoi(search_hit_number)-1));
                     } else {
                         //this user does not have a cart
                         deque<Product*> user_cart;
                         usercarts.insert(make_pair(username, user_cart));
-                        (it2->second).push_back(hits.at(stoi(search_hit_number)));
+                        (it2->second).push_back(hits.at(stoi(search_hit_number)-1));
                     }
                 } else {
                     cout << "Invalid request" << endl;
