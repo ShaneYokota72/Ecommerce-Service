@@ -19,16 +19,29 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
     //get a set for 2nd term
     set<Product*> set1;
     set<Product*> set2;
-    
+    cout << "productvec size" << productvector.size() << endl;
+    cout << "termtvec size" << terms.size() << endl;
     for(unsigned int i=0; i<productvector.size(); i++){
-        set<string> productwords = parseStringToWords((*productvector.at(i)).getName());
+        set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
+
+        /* for(auto str:productwords){
+            cout << "Product separated:" << str << endl;
+        }
+        cout << endl;
+        for(auto wor:terms){
+            cout << "Terms separated: " << wor << endl;
+        }
+        cout << endl << endl; */
+        
         set<string>::iterator it = productwords.find(terms.at(0));
         if(it != productwords.end()){
             set1.insert(productvector.at(i));
+            cout << "set1 inserted at " << i << endl;
         }
         set<string>::iterator it2 = productwords.find(terms.at(1));
         if(it2 != productwords.end()){
             set2.insert(productvector.at(i));
+            cout << "set2 inserted at " << i << endl;
         }
     }
     set<Product*> result;
