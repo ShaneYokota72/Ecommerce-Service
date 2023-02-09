@@ -15,6 +15,7 @@ std::string convToLower(std::string src)
     to a set of words based on the criteria given in the assignment **/
 std::set<std::string> parseStringToWords(std::string rawWords)
 {
+    //separate the words when they have a punctuation
     std::set <std::string> result;
     int wordlen = 0;
     int curridx = 0;

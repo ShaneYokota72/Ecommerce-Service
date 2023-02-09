@@ -7,6 +7,7 @@ using namespace std;
 MyDataStore::MyDataStore(){ }
 
 MyDataStore::~MyDataStore() {
+    //deleting the dynamically allocated datas
     for(unsigned int i=0; i<productvector.size(); i++){
         delete productvector.at(i);
     }
@@ -16,62 +17,19 @@ MyDataStore::~MyDataStore() {
 }
 
 void MyDataStore::addProduct(Product* p){
+    //add the product to the vector
     productvector.push_back(p);
 }
 void MyDataStore::addUser(User* u){
+    //add the user to the vector
     uservector.push_back(u);
 }
 std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int type){
-    // get a set for the 1st term
-    //get a set for 2nd term
-    /* if(terms.size() == 0){
-        vector<Product*> empty;
-        return empty;
-    } */
-    // set<Product*> set1;
-    // set<Product*> set2;
-    // for(unsigned int i=0; i<productvector.size(); i++){
-    //     set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
-    //     set<string> productwordsaddition = (*productvector.at(i)).keywords();
-    //     productwords.insert(productwordsaddition.begin(), productwordsaddition.end());
-
-    //     /* for(auto str:productwords){
-    //         cout << "Product separated:" << str << endl;
-    //     }
-    //     cout << endl;
-    //     for(auto wor:terms){
-    //         cout << "Terms separated: " << wor << endl;
-    //     }
-    //     cout << endl << endl; */
-
-    //     if(terms.size()>0){
-    //         set<string>::iterator it = productwords.find(terms.at(0));
-    //         if(it != productwords.end()){
-    //             set1.insert(productvector.at(i));
-    //             // cout << "set1 inserted at " << i << endl;
-    //         }
-    //     }
-    //     if(terms.size()>1){
-    //         set<string>::iterator it2 = productwords.find(terms.at(1));
-    //         if(it2 != productwords.end()){
-    //             set2.insert(productvector.at(i));
-    //             // cout << "set2 inserted at " << i << endl;
-    //         }
-    //     }
-        
-    // }
-
-    /* set<Product*> result;
-    if(type == 0){
-        //intersection
-        result = setIntersection(left ,right);
-    } else {
-        //union
-        result = setUnion(left, right);
-    } */
     set<Product*> left;
     set<Product*> right;
     //put the thing in the left and right
+
+    //edgecase, when theres only one serach term
     if(terms.size() == 1){
         for(unsigned int i=0; i<productvector.size(); i++){
             set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
@@ -83,7 +41,7 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
                 left.insert(productvector.at(i));
             }
         }
-    } else {
+    } else {//when the search term are 2 or above
         for(unsigned int j = 0; j<terms.size()-1; j++){
             for(unsigned int i=0; i<productvector.size(); i++){
                 set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
@@ -109,11 +67,13 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
         }
     }
 
+    //translate set to vector
     vector<Product*> ans;
     ans.assign(left.begin(), left.end());
     return ans;
 }
 void MyDataStore::dump(std::ostream& ofile){
+    //dump following the format
     ofile << "<products>\n";
     for(unsigned int i=0; i<productvector.size(); i++){
         (productvector.at(i))->dump(ofile);

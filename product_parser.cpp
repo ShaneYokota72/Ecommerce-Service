@@ -130,6 +130,7 @@ std::string ProductBookParser::categoryID()
  */
 Product* ProductBookParser::makeProduct()
 {
+    //create a Book and return its pointer
     const string categ = "book";
     Product* result = new Book(categ, prodName_, price_, qty_, isbn_, author_);
     return result;
@@ -186,6 +187,7 @@ std::string ProductClothingParser::categoryID()
  */
 Product* ProductClothingParser::makeProduct()
 {
+    //create a Clothing and return its pointer
     const string categ = "clothing";
     Product* result = new Clothing(categ, prodName_, price_, qty_, size_, brand_);
     return result;
@@ -246,6 +248,7 @@ std::string ProductMovieParser::categoryID()
  */
 Product* ProductMovieParser::makeProduct()
 {
+    //create a Movie and return its pointer
     const string categ = "movie";
     Product* result = new Movie(categ, prodName_, price_, qty_, genre_, rating_);
     return result;

@@ -141,9 +141,6 @@ int main(int argc, char* argv[])
                         
                         user_cart->push_back(hits.at(stoi(search_hit_number)-1));
                         usercarts.insert(make_pair(username, user_cart));
-                        //(it2->second) = user_cart;
-                        /*cout << "element: " << hits.at(stoi(search_hit_number)-1)->getName() << endl;
-                        (it2->second)->push_back(hits.at(stoi(search_hit_number)-1));*/
                     }
                 } else {
                     cout << "Invalid request" << endl;
@@ -155,6 +152,7 @@ int main(int argc, char* argv[])
                 ss >> username;
                 if(ss.fail()){cout << "Invalid request" << endl;}
 
+                //find if the user exists
                 bool userexist = false;
                 for(unsigned int i=0; i<(ds.uservector).size(); i++){
                     if(((ds.uservector).at(i))->getName() == username){
@@ -167,15 +165,16 @@ int main(int argc, char* argv[])
                     map<string, deque<Product*>*>::iterator it2 = usercarts.find(username);
                     if(it2 != usercarts.end()){
                         //this user already has a cart
-                        // (it2->second) is the queue
                         for(unsigned int i=0; i<(it2->second)->size(); i++){
                             cout << "Iterm  " << i+1 << endl;
                             cout << ((it2->second)->at(i))->displayString() << endl;
                         }
                     } else {
+                        //this person does not have a cart
                         cout << "empty cart" << endl;
                     }
                 } else {
+                    //this user does not exist
                     cout << "End of file encountered while searching for invalid username message" << endl;
                 }
             } else if (cmd == "BUYCART"){
@@ -184,6 +183,7 @@ int main(int argc, char* argv[])
                 ss >> username;
                 if(ss.fail()){cout << "Invalid request" << endl;}
                 
+                //find user. If there's user, save the pointer that user
                 bool userexist = false;
                 User* userptr;
                 for(unsigned int i=0; i<(ds.uservector).size(); i++){
@@ -196,18 +196,9 @@ int main(int argc, char* argv[])
                 if(userexist){
                     //Buy cart
                     map<string, deque<Product*>*>::iterator it2 = usercarts.find(username);
-                    /*if(it2 != usercarts.end()){
-                        //cart exists
-                        for(int i=(it2->second)->size(); i!=0; i--){
-                            if(((*userptr).getBalance() >= (it2->second)->at(0)->getPrice()) && ((it2->second)->at(0)->getQty())>0){
-                                (*userptr).deductAmount((it2->second)->at(0)->getPrice());
-                                (it2->second)->at(0)->sold();
-                            }
-                            (it2->second)->pop_front();
-                        }
-                    }*/
                     if(it2 != usercarts.end()){
                         //cart exists
+                        // buy all the item as long as the funds are enough
                         while(((*userptr).getBalance() >= (it2->second)->at(0)->getPrice()) && ((it2->second)->at(0)->getQty()>=1)){
                             userptr->deductAmount((it2->second)->at(0)->getPrice());
                             (it2->second)->at(0)->sold();
@@ -216,17 +207,9 @@ int main(int argc, char* argv[])
                                 break;
                             }
                         }
-
-
-                        /* for(int i=(it2->second)->size(); i!=0; i--){
-                            if(((*userptr).getBalance() >= (it2->second)->at(0)->getPrice()) && ((it2->second)->at(0)->getQty())>0){
-                                (*userptr).deductAmount((it2->second)->at(0)->getPrice());
-                                (it2->second)->at(0)->sold();
-                            }
-                            (it2->second)->pop_front();
-                        } */
                     }
                 } else {
+                    // error msg(user does not exist)
                     cout << "End of file encountered while searching for invalid username message" << endl;
                 }
             } else {

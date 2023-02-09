@@ -12,8 +12,8 @@ Book::Book(const std::string category, const std::string name, double price, int
 Book::~Book(){ };
 
 std::set<std::string> Book::keywords() const{
+    //add the keyword for this product
     set<string> result;
-    //result.insert(getName());
     set<string> authorset = parseStringToWords(convToLower(author_));
     result.insert(authorset.begin(), authorset.end());
     result.insert(isbn_);
@@ -21,12 +21,7 @@ std::set<std::string> Book::keywords() const{
 }
 
 std::string Book::displayString() const{
-    /* 
-    <name>
-    Author: <author> ISBN: <isbn>
-    <price> <quantity> left. 
-    */
-
+    //display the output in a string
     string res = "";
     res = res + name_ + '\n' +
     "Author: " + author_ + " ISBN: " + isbn_ + '\n' +
@@ -35,9 +30,7 @@ std::string Book::displayString() const{
 }
 
 void Book::dump(std::ostream& os) const{
-    
-    /* os << category_ << "\n" << name_ << "\n" << fixed << setprecision(2) << price_ << "\n" << qty_ << 
-    "\n" << isbn_ << "\n" << author_ << endl; */
+    //dump following the format
     Product::dump(os);
     os << isbn_ << endl;
     os << author_ << endl;

@@ -12,19 +12,15 @@ Movie::Movie(const std::string category, const std::string name, double price, i
 Movie::~Movie(){ };
 
 std::set<std::string> Movie::keywords() const{
+    //add the keyword for this product
     set<string> result;
-    //result.insert(getName());
     set<string> genreset = parseStringToWords(convToLower(genre_));
     result.insert(genreset.begin(), genreset.end());
     return result;
 }
 
 std::string Movie::displayString() const{
-    /* 
-    <name>
-    Genre: <genre> Rating: <rating>
-    <price> <quantity> left.
-     */
+    //display the output in a string
     string res = "";
     res = res + name_ + '\n' +
     "Genre: " + genre_ + " Rating: " + rating_ + '\n' +
@@ -33,6 +29,7 @@ std::string Movie::displayString() const{
 }
 
 void Movie::dump(std::ostream& os) const{
+    //dump following the format
     os << category_ << "\n" << name_ << "\n" << fixed << setprecision(2) << price_ << "\n" << qty_ << 
     "\n" << genre_ << "\n" << rating_ << endl;
 }

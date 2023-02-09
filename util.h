@@ -13,6 +13,7 @@
 template <typename T>
 std::set<T> setIntersection(std::set<T>& s1, std::set<T>& s2)
 {
+    //return intersection of the dataset
     typename std::set<T>::iterator it;
 
     std::set<T> result;
@@ -29,6 +30,7 @@ std::set<T> setIntersection(std::set<T>& s1, std::set<T>& s2)
 template <typename T>
 std::set<T> setUnion(std::set<T>& s1, std::set<T>& s2)
 {
+    //return union of the dataset
     typename std::set<T>::iterator it;
     typename std::set<T>::iterator it2;
 

@@ -12,19 +12,15 @@ Clothing::Clothing(const std::string category, const std::string name, double pr
 Clothing::~Clothing(){ };
 
 std::set<std::string> Clothing::keywords() const{
+    //add the keyword for this product
     set<string> result;
-    //result.insert(getName());
     set<string> brandset = parseStringToWords(convToLower(brand_));
     result.insert(brandset.begin(), brandset.end());
     return result;
 }
 
 std::string Clothing::displayString() const{
-    /* 
-    <name>
-    Size: <size> Brand: <brand>
-    <price> <quantity> left.
-    */
+    //display the output in a string
     string res = "";
     res = res + name_ + '\n' +
     "Size: " + size_ + " Brand: " + brand_ + '\n' +
@@ -33,6 +29,7 @@ std::string Clothing::displayString() const{
 }
 
 void Clothing::dump(std::ostream& os) const{
+    //dump following the format
     os << category_ << "\n" << name_ << "\n" << fixed << setprecision(2) << price_ << "\n" << qty_ << 
     "\n" << size_ << "\n" << brand_ << endl;
 }
