@@ -72,32 +72,42 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
     set<Product*> left;
     set<Product*> right;
     //put the thing in the left and right
-    for(unsigned int j = 0; j<terms.size()-1; j++){
-        for(unsigned int i=0; i<productvector.size(); i++){
+    if(terms.size() == 1){
+        for(unsigned int i=0; i<productvector.size(); i++){{
             set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
             set<string> productwordsaddition = (*productvector.at(i)).keywords();
             productwords.insert(productwordsaddition.begin(), productwordsaddition.end());
-            
-            set<string>::iterator it = productwords.find(terms.at(j));
+
+            set<string>::iterator it = productwords.find(terms.at(0));
             if(it != productwords.end()){
                 left.insert(productvector.at(i));
             }
-            set<string>::iterator it2 = productwords.find(terms.at(j+1));
-            if(it2 != productwords.end()){
-                right.insert(productvector.at(i));
+        }
+    } else {
+        for(unsigned int j = 0; j<terms.size()-1; j++){
+            for(unsigned int i=0; i<productvector.size(); i++){
+                set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
+                set<string> productwordsaddition = (*productvector.at(i)).keywords();
+                productwords.insert(productwordsaddition.begin(), productwordsaddition.end());
+                
+                set<string>::iterator it = productwords.find(terms.at(j));
+                if(it != productwords.end()){
+                    left.insert(productvector.at(i));
+                }
+                set<string>::iterator it2 = productwords.find(terms.at(j+1));
+                if(it2 != productwords.end()){
+                    right.insert(productvector.at(i));
+                }
+            }
+            if(type == 0){
+                left = setIntersection(left, right);
+                right.clear();
+            } else {
+                left = setUnion(left, right);
+                right.clear();
             }
         }
-        if(type == 0){
-            left = setIntersection(left, right);
-            right.clear();
-        } else {
-            left = setUnion(left, right);
-            right.clear();
-        }
-    
     }
-        
-    
 
     vector<Product*> ans;
     ans.assign(left.begin(), left.end());
