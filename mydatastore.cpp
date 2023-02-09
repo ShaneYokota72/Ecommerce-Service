@@ -24,6 +24,10 @@ void MyDataStore::addUser(User* u){
 std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int type){
     // get a set for the 1st term
     //get a set for 2nd term
+    if(terms.size() == 0){
+        vector<Product*> empty;
+        return empty;
+    }
     set<Product*> set1;
     set<Product*> set2;
     // cout << "productvec size" << productvector.size() << endl;
@@ -42,16 +46,21 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
         }
         cout << endl << endl; */
 
-        set<string>::iterator it = productwords.find(terms.at(0));
-        if(it != productwords.end()){
-            set1.insert(productvector.at(i));
-            // cout << "set1 inserted at " << i << endl;
+        if(terms.size()>0){
+            set<string>::iterator it = productwords.find(terms.at(0));
+            if(it != productwords.end()){
+                set1.insert(productvector.at(i));
+                // cout << "set1 inserted at " << i << endl;
+            }
         }
-        set<string>::iterator it2 = productwords.find(terms.at(1));
-        if(it2 != productwords.end()){
-            set2.insert(productvector.at(i));
-            // cout << "set2 inserted at " << i << endl;
+        if(terms.size()>1){
+            set<string>::iterator it2 = productwords.find(terms.at(1));
+            if(it2 != productwords.end()){
+                set2.insert(productvector.at(i));
+                // cout << "set2 inserted at " << i << endl;
+            }
         }
+        
     }
     set<Product*> result;
     if(type == 0){
