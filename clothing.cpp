@@ -1,4 +1,5 @@
 #include "clothing.h"
+#include "util.h"
 #include <iomanip>
 using namespace std;
 
@@ -12,8 +13,9 @@ Clothing::~Clothing(){ };
 
 std::set<std::string> Clothing::keywords() const{
     set<string> result;
-    result.insert(getName());
-    result.insert(brand_);
+    //result.insert(getName());
+    set<string> brandset = parseStringToWords(convToLower(brand_));
+    result.insert(brandset.begin(), brandset.end());
     return result;
 }
 

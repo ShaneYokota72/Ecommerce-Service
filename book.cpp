@@ -1,4 +1,5 @@
 #include "book.h"
+#include "util.h"
 #include <iomanip>
 using namespace std;
 
@@ -12,8 +13,9 @@ Book::~Book(){ };
 
 std::set<std::string> Book::keywords() const{
     set<string> result;
-    result.insert(getName());
-    result.insert(author_);
+    //result.insert(getName());
+    set<string> authorset = parseStringToWords(convToLower(author_));
+    result.insert(authorset.begin(), authorset.end());
     result.insert(isbn_);
     return result;
 }

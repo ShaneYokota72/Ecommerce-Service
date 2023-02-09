@@ -1,4 +1,5 @@
 #include "movie.h"
+#include "util.h"
 #include <iomanip>
 using namespace std;
 
@@ -12,8 +13,9 @@ Movie::~Movie(){ };
 
 std::set<std::string> Movie::keywords() const{
     set<string> result;
-    result.insert(getName());
-    result.insert(genre_);
+    //result.insert(getName());
+    set<string> genreset = parseStringToWords(convToLower(genre_));
+    result.insert(genreset.begin(), genreset.end());
     return result;
 }
 
