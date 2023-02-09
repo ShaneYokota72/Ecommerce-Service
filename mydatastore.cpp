@@ -30,6 +30,7 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
     }
     set<Product*> set1;
     set<Product*> set2;
+    set<Product*> set3;
     // cout << "productvec size" << productvector.size() << endl;
     // cout << "termtvec size" << terms.size() << endl;
     for(unsigned int i=0; i<productvector.size(); i++){
@@ -60,15 +61,24 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
                 // cout << "set2 inserted at " << i << endl;
             }
         }
+        if(terms.size()>2){
+            set<string>::iterator it3 = productwords.find(terms.at(2));
+            if(it3 != productwords.end()){
+                set3.insert(productvector.at(i));
+                // cout << "set2 inserted at " << i << endl;
+            }
+        }
         
     }
     set<Product*> result;
     if(type == 0){
         //intersection
-        result = setIntersection(set1, set2);
+        set<Product*> temp = setIntersection(set1, set2);
+        result = setIntersection(temp ,set3);
     } else {
         //union
-        result = setUnion(set1, set2);
+        set<Product*> temp = setUnion(set1, set2);
+        result = setUnion(temp, set3);
     }
 
 
