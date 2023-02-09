@@ -24,100 +24,83 @@ void MyDataStore::addUser(User* u){
 std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int type){
     // get a set for the 1st term
     //get a set for 2nd term
-    if(terms.size() == 0){
+    /* if(terms.size() == 0){
         vector<Product*> empty;
         return empty;
-    }
-    set<Product*> set1;
-    set<Product*> set2;
-    set<Product*> set3;
-    // cout << "productvec size" << productvector.size() << endl;
-    // cout << "termtvec size" << terms.size() << endl;
-    for(unsigned int i=0; i<productvector.size(); i++){
+    } */
+    // set<Product*> set1;
+    // set<Product*> set2;
+    // for(unsigned int i=0; i<productvector.size(); i++){
+    //     set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
+    //     set<string> productwordsaddition = (*productvector.at(i)).keywords();
+    //     productwords.insert(productwordsaddition.begin(), productwordsaddition.end());
+
+    //     /* for(auto str:productwords){
+    //         cout << "Product separated:" << str << endl;
+    //     }
+    //     cout << endl;
+    //     for(auto wor:terms){
+    //         cout << "Terms separated: " << wor << endl;
+    //     }
+    //     cout << endl << endl; */
+
+    //     if(terms.size()>0){
+    //         set<string>::iterator it = productwords.find(terms.at(0));
+    //         if(it != productwords.end()){
+    //             set1.insert(productvector.at(i));
+    //             // cout << "set1 inserted at " << i << endl;
+    //         }
+    //     }
+    //     if(terms.size()>1){
+    //         set<string>::iterator it2 = productwords.find(terms.at(1));
+    //         if(it2 != productwords.end()){
+    //             set2.insert(productvector.at(i));
+    //             // cout << "set2 inserted at " << i << endl;
+    //         }
+    //     }
+        
+    // }
+
+    set<Product*> left;
+    set<Product*> right;
+    for(unsigned int i=0; i<productvector.size()-1; i++){
+        //make the set of productwords(all productname, author, isbn, etc)
         set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
         set<string> productwordsaddition = (*productvector.at(i)).keywords();
         productwords.insert(productwordsaddition.begin(), productwordsaddition.end());
 
-        /* for(auto str:productwords){
-            cout << "Product separated:" << str << endl;
-        }
-        cout << endl;
-        for(auto wor:terms){
-            cout << "Terms separated: " << wor << endl;
-        }
-        cout << endl << endl; */
+        //put the thing in the left and right
 
-        if(terms.size()>0){
-            set<string>::iterator it = productwords.find(terms.at(0));
-            if(it != productwords.end()){
-                set1.insert(productvector.at(i));
-                // cout << "set1 inserted at " << i << endl;
-            }
+        set<string>::iterator it = productwords.find(terms.at(i));
+        if(it != productwords.end()){
+            left.insert(productvector.at(i));
         }
-        if(terms.size()>1){
-            set<string>::iterator it2 = productwords.find(terms.at(1));
-            if(it2 != productwords.end()){
-                set2.insert(productvector.at(i));
-                // cout << "set2 inserted at " << i << endl;
-            }
+        set<string>::iterator it2 = productwords.find(terms.at(i+1));
+        if(it2 != productwords.end()){
+            right.insert(productvector.at(i));
         }
-        if(terms.size()>2){
-            set<string>::iterator it3 = productwords.find(terms.at(2));
-            if(it3 != productwords.end()){
-                set3.insert(productvector.at(i));
-                // cout << "set2 inserted at " << i << endl;
-            }
+
+
+        if(type == 0){
+            left = setIntersection(left, right);
+        } else {
+            left = setUnion(left, right);
         }
-        
     }
-    set<Product*> result;
+
+
+    /* set<Product*> result;
     if(type == 0){
         //intersection
-        set<Product*> temp = setIntersection(set1, set2);
-        result = setIntersection(temp ,set3);
+        result = setIntersection(left ,right);
     } else {
         //union
-        set<Product*> temp = setUnion(set1, set2);
-        result = setUnion(temp, set3);
-    }
-
-
-    /* //compare the 1st and 2nd sets and come out with the result vector
-    set<Product*> resultset;
-    if(type == 0){
-        //intersection
-        for(unsigned int i=0; i<productvector.size(); i++){
-            set<string> productword = parseStringToWords((*productvector.at(i)).getName());
-            bool match = true;            
-            for(unsigned int j=0; j<terms.size(); j++){
-                set<string>::iterator it = productword.find(terms.at(i));
-                if(it == productword.end()){
-                    match = false;
-                }
-            }
-            if(match){
-                resultset.insert(productvector.at(i));
-            }
-        }
-    } else {
-        // union
-        for(unsigned int i=0; i<productvector.size(); i++){
-            set<string> productword = parseStringToWords((*productvector.at(i)).getName());
-            bool match = false;            
-            for(unsigned int j=0; j<terms.size(); j++){
-                set<string>::iterator it = productword.find(terms.at(i));
-                if(it != productword.end()){
-                    match = true;
-                }
-            }
-            if(match){
-                resultset.insert(productvector.at(i));
-            }
-        }
+        result = setUnion(left, right);
     } */
 
+
     vector<Product*> ans;
-    ans.assign(result.begin(), result.end());
+    ans.assign(left.begin(), left.end());
     return ans;
 }
 void MyDataStore::dump(std::ostream& ofile){
