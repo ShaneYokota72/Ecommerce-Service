@@ -23,8 +23,8 @@ std::string Clothing::displayString() const{
     Size: <size> Brand: <brand>
     <price> <quantity> left.
     */
-    string res;
-    res = res = name_ + '\n' +
+    string res = "";
+    res = res + name_ + '\n' +
     "Size: " + size_ + " Brand: " + brand_ + '\n' +
     to_string(price_) + " " + to_string(qty_) + " left.";
     return res;

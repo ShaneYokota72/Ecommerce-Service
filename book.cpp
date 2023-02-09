@@ -25,8 +25,10 @@ std::string Book::displayString() const{
     <price> <quantity> left. 
     */
 
-    string res;
-    res = name_ + '\n' + "Author: " + author_ + " ISBN: " + isbn_ + '\n' + to_string(price_) + " " + to_string(qty_) + " left.";
+    string res = "";
+    res = res + name_ + '\n' +
+    "Author: " + author_ + " ISBN: " + isbn_ + '\n' +
+    to_string(price_) + " " + to_string(qty_) + " left.";
     return res;
 }
 
