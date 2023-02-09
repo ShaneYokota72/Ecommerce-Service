@@ -218,7 +218,7 @@ int main(int argc, char* argv[])
     // deleting the dynamically allocated deques
     map<string, deque<Product*>*>::iterator it;
     for(it = usercarts.begin(); it != usercarts.end(); ++it){
-        delete [] (it->second);
+        delete (it->second);
     }
 
     return 0;
