@@ -176,7 +176,7 @@ int main(int argc, char* argv[])
                         cout << "empty cart" << endl;
                     }
                 } else {
-                    cout << "Invalid request" << endl;
+                    cout << "End of file encountered while searching for invalid username message" << endl;
                 }
             } else if (cmd == "BUYCART"){
                 //username 
@@ -196,7 +196,7 @@ int main(int argc, char* argv[])
                 if(userexist){
                     //Buy cart
                     map<string, deque<Product*>*>::iterator it2 = usercarts.find(username);
-                    if(it2 != usercarts.end()){
+                    /*if(it2 != usercarts.end()){
                         //cart exists
                         for(int i=(it2->second)->size(); i!=0; i--){
                             if(((*userptr).getBalance() >= (it2->second)->at(0)->getPrice()) && ((it2->second)->at(0)->getQty())>0){
@@ -205,9 +205,29 @@ int main(int argc, char* argv[])
                             }
                             (it2->second)->pop_front();
                         }
+                    }*/
+                    if(it2 != usercarts.end()){
+                        //cart exists
+                        while(((*userptr).getBalance() >= (it2->second)->at(0)->getPrice()) && ((it2->second)->at(0)->getQty()>=1)){
+                            userptr->deductAmount((it2->second)->at(0)->getPrice());
+                            (it2->second)->at(0)->sold();
+                            (it2->second)->pop_front();
+                            if((it2->second)->size() == 0){
+                                break;
+                            }
+                        }
+
+
+                        /* for(int i=(it2->second)->size(); i!=0; i--){
+                            if(((*userptr).getBalance() >= (it2->second)->at(0)->getPrice()) && ((it2->second)->at(0)->getQty())>0){
+                                (*userptr).deductAmount((it2->second)->at(0)->getPrice());
+                                (it2->second)->at(0)->sold();
+                            }
+                            (it2->second)->pop_front();
+                        } */
                     }
                 } else {
-                    cout << "Invalid request" << endl;
+                    cout << "End of file encountered while searching for invalid username message" << endl;
                 }
             } else {
                 cout << "Unknown command" << endl;

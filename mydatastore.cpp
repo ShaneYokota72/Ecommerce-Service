@@ -73,7 +73,7 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
     set<Product*> right;
     //put the thing in the left and right
     if(terms.size() == 1){
-        for(unsigned int i=0; i<productvector.size(); i++){{
+        for(unsigned int i=0; i<productvector.size(); i++){
             set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
             set<string> productwordsaddition = (*productvector.at(i)).keywords();
             productwords.insert(productwordsaddition.begin(), productwordsaddition.end());
