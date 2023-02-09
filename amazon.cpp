@@ -169,7 +169,8 @@ int main(int argc, char* argv[])
                         //this user already has a cart
                         // (it2->second) is the queue
                         for(unsigned int i=0; i<(it2->second)->size(); i++){
-                            cout << ((it2->second)->at(i))->getName() << endl;
+                            cout << "Iterm  " << i+1 << endl;
+                            cout << ((it2->second)->at(i))->displayString() << endl;
                         }
                     } else {
                         cout << "empty cart" << endl;
