@@ -63,29 +63,31 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
 
     set<Product*> left;
     set<Product*> right;
-    for(unsigned int i=0; i<productvector.size()-1; i++){
+    for(unsigned int i=0; i<productvector.size(); i++){
         //make the set of productwords(all productname, author, isbn, etc)
         set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
         set<string> productwordsaddition = (*productvector.at(i)).keywords();
         productwords.insert(productwordsaddition.begin(), productwordsaddition.end());
 
         //put the thing in the left and right
+        for(unsigned int j = 0; j<terms.size()-1; j++){
+            set<string>::iterator it = productwords.find(terms.at(i));
+            if(it != productwords.end()){
+                left.insert(productvector.at(i));
+            }
+            set<string>::iterator it2 = productwords.find(terms.at(i+1));
+            if(it2 != productwords.end()){
+                right.insert(productvector.at(i));
+            }
 
-        set<string>::iterator it = productwords.find(terms.at(i));
-        if(it != productwords.end()){
-            left.insert(productvector.at(i));
+            if(type == 0){
+                left = setIntersection(left, right);
+            } else {
+                left = setUnion(left, right);
+            }
         }
-        set<string>::iterator it2 = productwords.find(terms.at(i+1));
-        if(it2 != productwords.end()){
-            right.insert(productvector.at(i));
-        }
-
-
-        if(type == 0){
-            left = setIntersection(left, right);
-        } else {
-            left = setUnion(left, right);
-        }
+        
+        
     }
 
 
