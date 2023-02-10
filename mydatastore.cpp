@@ -15,6 +15,10 @@ MyDataStore::~MyDataStore() {
     for(unsigned int i=0; i<uservector.size(); i++){
         delete uservector.at(i);
     }
+    map<string, set<Product*>*>::iterator it;
+    for(it = keytoproduct.begin(); it!= keytoproduct.end(); ++it){
+        delete it->second;
+    }
 }
 
 void MyDataStore::addProduct(Product* p){
