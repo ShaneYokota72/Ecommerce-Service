@@ -1,6 +1,8 @@
 #include "datastore.h"
 #include "util.h"
 #include "product.h"
+#include <set>
+#include <map>
 
 
 
@@ -39,4 +41,6 @@ public:
     std::vector<Product*> productvector;
 //users
     std::vector<User*> uservector;
+//a data 
+    std::map<std::string, std::set<Product*>* > keytoproduct;
 };

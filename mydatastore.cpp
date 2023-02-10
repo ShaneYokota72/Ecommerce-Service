@@ -1,6 +1,7 @@
 #include "mydatastore.h"
 #include "util.h"
 #include <set>
+#include <map>
 
 using namespace std;
 
@@ -19,13 +20,31 @@ MyDataStore::~MyDataStore() {
 void MyDataStore::addProduct(Product* p){
     //add the product to the vector
     productvector.push_back(p);
+
+    set<string> productkeywords = parseStringToWords(convToLower(p->getName()));
+    set<string> additional = p->keywords();
+    productkeywords.insert(additional.begin(), additional.end());
+
+    set<string>::iterator it;
+    for(it = productkeywords.begin(); it!=productkeywords.end(); ++it){
+        map<string, set<Product*>*>::iterator it2 = keytoproduct.find(*it);
+        if(it2 == keytoproduct.end()){
+            //this keyword doesnt exist
+            set<Product*>* temp = new set<Product*>;
+            temp->insert(p);
+            keytoproduct.insert(make_pair(*it, temp));
+        } else{
+            //this keyword is alerady matched with something else
+            (it2->second)->insert(p);
+        }
+    }
 }
 void MyDataStore::addUser(User* u){
     //add the user to the vector
     uservector.push_back(u);
 }
 std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int type){
-    set<Product*> left;
+    /* set<Product*> left;
     set<Product*> right;
     //put the thing in the left and right
 
@@ -70,7 +89,35 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
     //translate set to vector
     vector<Product*> ans;
     ans.assign(left.begin(), left.end());
-    return ans;
+    return ans; */
+    set<Product*> left;
+    set<Product*> right;
+    if(terms.size() == 1){
+        map<string, set<Product*>*>::iterator it = keytoproduct.find(terms.at(0));
+        left = *(it->second);
+    } else {
+        for(int i=0; i<terms.size()-1; i++){
+            map<string, set<Product*>*>::iterator it = keytoproduct.find(terms.at(i));
+            map<string, set<Product*>*>::iterator it2 = keytoproduct.find(terms.at(i+1));
+
+            left = *(it->second);//is a set of <product*>
+            right = *(it2->second);//is a set of <product*>
+
+            if(type == 0){
+                left = setIntersection(left, right);
+                right.clear();
+            } else {
+                left = setUnion(left, right);
+                right.clear();
+            }
+        }
+    }
+    
+    //translate set to vector
+    vector<Product*> ans;
+    ans.assign(left.begin(), left.end());
+    return ans; 
+    
 }
 void MyDataStore::dump(std::ostream& ofile){
     //dump following the format
