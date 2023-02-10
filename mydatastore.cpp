@@ -48,55 +48,10 @@ void MyDataStore::addUser(User* u){
     uservector.push_back(u);
 }
 std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int type){
-    /* set<Product*> left;
-    set<Product*> right;
-    //put the thing in the left and right
-
-    //edgecase, when theres only one serach term
-    if(terms.size() == 1){
-        for(unsigned int i=0; i<productvector.size(); i++){
-            set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
-            set<string> productwordsaddition = (*productvector.at(i)).keywords();
-            productwords.insert(productwordsaddition.begin(), productwordsaddition.end());
-
-            set<string>::iterator it = productwords.find(terms.at(0));
-            if(it != productwords.end()){
-                left.insert(productvector.at(i));
-            }
-        }
-    } else {//when the search term are 2 or above
-        for(unsigned int j = 0; j<terms.size()-1; j++){
-            for(unsigned int i=0; i<productvector.size(); i++){
-                set<string> productwords = parseStringToWords(convToLower((*productvector.at(i)).getName()));
-                set<string> productwordsaddition = (*productvector.at(i)).keywords();
-                productwords.insert(productwordsaddition.begin(), productwordsaddition.end());
-                
-                set<string>::iterator it = productwords.find(terms.at(j));
-                if(it != productwords.end()){
-                    left.insert(productvector.at(i));
-                }
-                set<string>::iterator it2 = productwords.find(terms.at(j+1));
-                if(it2 != productwords.end()){
-                    right.insert(productvector.at(i));
-                }
-            }
-            if(type == 0){
-                left = setIntersection(left, right);
-                right.clear();
-            } else {
-                left = setUnion(left, right);
-                right.clear();
-            }
-        }
-    }
-
-    //translate set to vector
-    vector<Product*> ans;
-    ans.assign(left.begin(), left.end());
-    return ans; */
     set<Product*> left;
     set<Product*> right;
 
+    //print out the process
     /* map<string, set<Product*>*>::iterator print;
     for(print = keytoproduct.begin(); print!= keytoproduct.end(); ++print){
         cout << print->first << endl;
@@ -129,6 +84,7 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
                 right.clear();
             }
 
+            //print out the set after union/intersection
             /* //print left
             set<Product*>::iterator check;
             cout << endl << "AFTER LEFT AND RIGHT CONVERSION" << endl;
