@@ -96,6 +96,17 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
     return ans; */
     set<Product*> left;
     set<Product*> right;
+
+    /* map<string, set<Product*>*>::iterator print;
+    for(print = keytoproduct.begin(); print!= keytoproduct.end(); ++print){
+        cout << print->first << endl;
+        set<Product*>::iterator it;
+        for(it = (print->second)->begin(); it != (print->second)->end(); ++it){
+            cout << '\t' << (*it)->getName() << endl;;
+        }
+        
+    } */
+
     if(terms.size() == 1){
         map<string, set<Product*>*>::iterator it = keytoproduct.find(terms.at(0));
         left = *(it->second);
@@ -104,7 +115,7 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
             map<string, set<Product*>*>::iterator it = keytoproduct.find(terms.at(i));
             map<string, set<Product*>*>::iterator it2 = keytoproduct.find(terms.at(i+1));
 
-            if(it != keytoproduct.end()){
+            if(it != keytoproduct.end() && i == 0){
                 left = *(it->second);//is a set of <product*>
             }
             if(it2 != keytoproduct.end()){
@@ -117,6 +128,14 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
                 left = setUnion(left, right);
                 right.clear();
             }
+
+            /* //print left
+            set<Product*>::iterator check;
+            cout << endl << "AFTER LEFT AND RIGHT CONVERSION" << endl;
+            for(check = left.begin(); check!= left.end(); ++check){
+                cout << (*check)->getName() << endl;
+            }
+            cout << endl; */
         }
     }
     
