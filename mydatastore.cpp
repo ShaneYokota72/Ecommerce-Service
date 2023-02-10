@@ -104,9 +104,12 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
             map<string, set<Product*>*>::iterator it = keytoproduct.find(terms.at(i));
             map<string, set<Product*>*>::iterator it2 = keytoproduct.find(terms.at(i+1));
 
-            left = *(it->second);//is a set of <product*>
-            right = *(it2->second);//is a set of <product*>
-
+            if(it != keytoproduct.end()){
+                left = *(it->second);//is a set of <product*>
+            }
+            if(it2 != keytoproduct.end()){
+                right = *(it2->second);//is a set of <product*>
+            }
             if(type == 0){
                 left = setIntersection(left, right);
                 right.clear();
