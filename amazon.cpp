@@ -166,7 +166,7 @@ int main(int argc, char* argv[])
                     if(it2 != usercarts.end()){
                         //this user already has a cart
                         for(unsigned int i=0; i<(it2->second)->size(); i++){
-                            cout << "Iterm  " << i+1 << endl;
+                            cout << "Item " << i+1 << endl;
                             cout << ((it2->second)->at(i))->displayString() << endl;
                         }
                     } else {
