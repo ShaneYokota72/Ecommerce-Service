@@ -165,14 +165,14 @@ int main(int argc, char* argv[])
                     map<string, deque<Product*>*>::iterator it2 = usercarts.find(username);
                     if(it2 != usercarts.end()){
                         //*(it2->second); //the deque itself
-                        vector<Product*> convert;
+                        //          vector<Product*> convert;
                         //this user already has a cart
                         for(unsigned int i=0; i<(it2->second)->size(); i++){
-                            convert.push_back((it2->second)->at(i));
-                            /* cout << "Item " << i+1 << endl;
-                            cout << ((it2->second)->at(i))->displayString() << endl; */
+                            //            convert.push_back((it2->second)->at(i));
+                            cout << "Item " << i+1 << endl;
+                            cout << ((it2->second)->at(i))->displayString() << endl;
                         }
-                        displayProducts(convert);
+                        //         displayProducts(convert);
                     } else {
                         //this person does not have a cart
                         cout << "empty cart" << endl;
